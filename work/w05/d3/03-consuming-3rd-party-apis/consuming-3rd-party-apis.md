@@ -66,7 +66,9 @@ Since we can issue GET requests straight from the browser's address bar, let's r
 https://pokeapi.co/api/v2/pokemon/1
 ```
 
-**❓ What data format was returned?**
+<details><summary>❓ What data format was returned?</summary>
+<p><strong>JSON (JavaScript Object Notation)</strong></p>
+</details>
 
 ## Different architectural approaches
 
@@ -195,8 +197,6 @@ var router = express.Router();
 // The fetch variable will be a function that behaves like fetch in the browser
 const fetch = require('node-fetch');
 ```
-
-> We'll ignore the best practice of creating a separate controller module - let's be rebels this lesson!
 
 Now, we need to review the documentation for the GitHub API...
 
@@ -343,6 +343,8 @@ router.get('/', function(req, res, next) {
 });
 ```
 
+> We'll ignore the best practice of creating a separate controller module - let's be rebels this lesson!
+
 For now, we're using the simple option of the `fetch` function that:
 
 - Takes a URL (string)
@@ -447,6 +449,7 @@ Multiple requests can be chained as follows:
 // other code above
 
 fetch(`${rootURL}users/${username}`, options)
+  .then(res => res.json())
   .then(userData => {
     // return the promise to be handled by the next .then
     return fetch(userData.repos_url, options);
@@ -471,6 +474,7 @@ Be careful doing the following refactor, some names have been changed to protect
 
 let userData;
 fetch(`${rootURL}users/${username}`, options)
+  .then(res => res.json())
   .then(user => {
     userData = user;
     // return the promise to be handled by the next .then
